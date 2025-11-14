@@ -36,7 +36,25 @@ algo-backtester/
 ## Strategy Explanation
 **Simple MA Crossover**: Buy when short MA crosses above long MA, sell when it crosses below.
 
-## Installation
+## Setup
+
+### 1. Create a Virtual Environment (Recommended)
+```bash
+python -m venv venv
+```
+
+### 2. Activate the Virtual Environment
+**On Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**On Mac/Linux:**
+```bash
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
