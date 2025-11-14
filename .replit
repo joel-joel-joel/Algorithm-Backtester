@@ -1,0 +1,42 @@
+entrypoint = "main.py"
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-25_05"
+packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "pkg-config", "qhull", "tcl", "tk"]
+
+[unitTest]
+language = "python3"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
+[deployment]
+run = ["python", "src/main.py", "--symbol", "AAPL", "--start", "2020-01-01", "--end", "2024-01-01"]
+deploymentTarget = "vm"
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backtester"
+
+[[workflows.workflow]]
+name = "Backtester"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python src/main.py --symbol AAPL --start 2020-01-01 --end 2024-01-01"
+
+[workflows.workflow.metadata]
+outputType = "console"
