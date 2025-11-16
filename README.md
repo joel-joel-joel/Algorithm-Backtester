@@ -83,6 +83,70 @@ Three chart types saved to `results/` directory:
 - **Equity Curve** (`equity_curve.png`): Strategy performance over time
 - **Drawdown Analysis** (`drawdown.png`): Visual risk representation
 
+  
+### 8. Web Frontend (Flask UI)
+
+The Flask-based UI allows users to:
+
+- Enter a stock symbol, start/end dates, and moving average windows via an HTML form.  
+- Submit the form to run the backtest directly in the browser.  
+- View metrics such as **Total Return**, **CAGR**, **Max Drawdown**, **Sharpe Ratio**, and **Win Rate**.  
+- Generate charts (**Price + MA overlay**, **Equity Curve**, **Drawdown**) saved in the `results/` folder each time a new backtest is run.  
+
+Future enhancements will include interactive charts using **Plotly.js**.
+
+### Launching the Web UI
+
+Run the following command in your project directory:
+```bash
+python app.py
+```
+
+Then open the Replit web preview or navigate to:  
+[http://localhost:8080](http://localhost:8080)
+
+### Form Fields
+
+| Field           | Description                              | Example    |
+|-----------------|------------------------------------------|------------|
+| Stock Symbol    | Stock ticker to backtest                 | AAPL       |
+| Start Date      | Start of historical data (YYYY-MM-DD)    | 2018-01-01 |
+| End Date        | End of historical data (YYYY-MM-DD)      | 2025-01-01 |
+| Short MA Window | Number of days for short moving average  | 20         |
+| Long MA Window  | Number of days for long moving average   | 50         |
+
+### Example Usage
+
+After submitting the form, the page will display:
+
+```bash
+Backtest Results
+Total Return: 0.18
+CAGR: 0.11
+Max Drawdown: -0.12
+Sharpe Ratio: 1.20
+Win Rate: 0.57
+```
+
+
+### Generated Charts
+
+Charts are automatically generated and saved in the `results/` folder:
+
+- `price_sma.png` – Historical price with short/long MA overlays  
+- `equity_curve.png` – Portfolio value over time  
+- `drawdown.png` – Drawdown periods highlighted  
+
+These charts are updated every time a new backtest is run, so the folder always contains the latest results.
+
+### Notes
+
+- The web UI uses a simple HTML form and Flask backend.  
+- No JavaScript or chart libraries are required initially, but **Plotly.js** can be added later for interactive charts.  
+- The backend reuses the same `Backtester` class, ensuring consistency between the CLI and web results.
+
+
+
 ## Setup
 
 ### 1. Create a Virtual Environment (Recommended)
