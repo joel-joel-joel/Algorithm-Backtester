@@ -27,7 +27,20 @@ def sharpe_ratio(returns, risk_free_rate=0.02, periods_per_year=252):
     return (excess_returns.mean() / returns.std()) * np.sqrt(periods_per_year)
 
 def win_rate(trades):
-    if not trades:
+    """Calculate win rate from trades list"""
+    if not trades or len(trades) < 2:
         return 0
-    profitable = sum(1 for t in trades if t.get("profit", 0) > 0)
-    return (profitable / len(trades)) * 100 if len(trades) > 0 else 0
+
+    # Pair up buy and sell trades
+    wins = 0
+    total_complete_trades = 0
+
+    for i in range(len(trades) - 1):
+        if trades[i]['type'] == 'buy' and trades[i + 1]['type'] == 'sell':
+            buy_price = trades[i]['price']
+            sell_price = trades[i + 1]['price']
+            if sell_price > buy_price:
+                wins += 1
+            total_complete_trades += 1
+
+    return (wins / total_complete_trades * 100) if total_complete_trades > 0 else 0

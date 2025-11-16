@@ -3,8 +3,3 @@ matplotlib
 yfinance
 pytest
 numpy
-matplotlib
-numpy
-pandas
-pytest
-yfinance

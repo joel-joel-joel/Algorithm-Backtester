@@ -1,7 +1,7 @@
 from typing import Dict, Optional
 import pandas as pd
-from strategy import Strategy
-from indicators import sma
+from ..strategy import Strategy
+from ..indicators import sma
 
 
 class MAcrossoverStrategy(Strategy):
@@ -26,7 +26,7 @@ class MAcrossoverStrategy(Strategy):
         """Generate MA crossover signals
 
         Args:
-            data: DataFrame with 'close' price column
+            data: DataFrame with 'Close' price column
 
         Returns:
             DataFrame with 'short_ma', 'long_ma', and 'signal' columns
@@ -34,9 +34,9 @@ class MAcrossoverStrategy(Strategy):
         # Make a copy to avoid modifying original
         df = data.copy()
 
-        # Calculate indicators
-        df['short_ma'] = sma(df['close'], self.params['short_window'])
-        df['long_ma'] = sma(df['close'], self.params['long_window'])
+        # Calculate indicators (use 'Close' with capital C)
+        df['short_ma'] = sma(df['Close'], self.params['short_window'])
+        df['long_ma'] = sma(df['Close'], self.params['long_window'])
 
         # Generate signals (initialize all to 0)
         df['signal'] = 0
@@ -49,19 +49,15 @@ class MAcrossoverStrategy(Strategy):
         sell_signal = (df['short_ma'] < df['long_ma']) & (
             df['short_ma'].shift(1) >= df['long_ma'].shift(1))
 
-        # Apply signals (this naturally handles NaN as False in boolean indexing)
+        # Apply signals
         df.loc[buy_signal, 'signal'] = 1
         df.loc[sell_signal, 'signal'] = -1
 
-        # Fill any remaining NaN in signal column from shift operations
+        # Fill any remaining NaN in signal column
         df['signal'] = df['signal'].fillna(0)
 
         return df
 
     def get_required_indicators(self) -> list:
-        """Return required indicators for this strategy
-
-        Returns:
-            List of indicator names: ['SMA']
-        """
+        """Return required indicators for this strategy"""
         return ['SMA']

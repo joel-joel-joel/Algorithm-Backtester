@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import os
 
-def plot_price_and_sma(prices, sma_short, sma_long, title="Price and SMA", save_path=None):
+def plot_price_and_sma(prices, sma_short, sma_long, short_window=50, long_window=200, 
+                       title="Price and SMA", save_path=None):
     plt.figure(figsize=(14, 7))
     plt.plot(prices.index, prices, label="Close Price", color="black", linewidth=2)
-    plt.plot(sma_short.index, sma_short, label=f"SMA {len(sma_short)}", color="blue", linewidth=1.5)
-    plt.plot(sma_long.index, sma_long, label=f"SMA {len(sma_long)}", color="red", linewidth=1.5)
+    plt.plot(sma_short.index, sma_short, label=f"SMA {short_window}", color="blue", linewidth=1.5)
+    plt.plot(sma_long.index, sma_long, label=f"SMA {long_window}", color="red", linewidth=1.5)
     plt.title(title)
     plt.xlabel("Date")
     plt.ylabel("Price")

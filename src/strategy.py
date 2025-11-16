@@ -30,5 +30,6 @@ class Strategy(ABC):
 
     def validate_data(self, data: pd.DataFrame) -> bool:
         """Validate that data has required columns"""
-        required = ['open', 'high', 'low', 'close', 'volume']
+        # Use capitalized column names as returned by yfinance
+        required = ['Open', 'High', 'Low', 'Close', 'Volume']
         return all(col in data.columns for col in required)
